@@ -1,0 +1,8 @@
+
+.nivel.oculto {
+  display: none;
+}
+
+.nivel.activo {
+  display: block;
+}
