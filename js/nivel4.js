@@ -3,6 +3,14 @@
 
 class Nivel4 {
     constructor() {
+        // Validar acceso antes de inicializar
+        const reached = parseInt(localStorage.getItem('escapeRoom_levelReached') || '1', 10);
+        if (reached < 4) {
+            alert('Acceso denegado. Debes completar los niveles anteriores primero.');
+            window.location.href = 'index.html';
+            return;
+        }
+
         this.worker = null;
         this.datosGenerados = false;
         this.resultadosObtenidos = false;
@@ -16,27 +24,50 @@ class Nivel4 {
         // Event listeners
         document.getElementById('iniciarBtn').addEventListener('click', () => this.iniciarProcesamiento());
         document.getElementById('limpiarBtn').addEventListener('click', () => this.limpiar());
+        
+        const nextBtn = document.getElementById('btn-siguiente-n4');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                window.location.href = 'nivel5.html';
+            });
+        }
     }
 
     crearWorker() {
         const workerCode = `
-            let datosRecibidos = 0;
-            let totalDatos = 0;
-
             self.onmessage = function(event) {
                 const datos = event.data;
-                totalDatos = datos.length;
-                datosRecibidos = 0;
+                const totalDatos = datos.length;
 
-                // Procesamiento de estadísticas
-                let temperaturas = [];
-                let humedades = [];
+                if (totalDatos === 0) {
+                    self.postMessage({
+                        tipo: 'resultados',
+                        temperatura: { promedio: '0.00', maximo: '0.00', minimo: '0.00' },
+                        humedad: { promedio: '0.00', maximo: '0.00', minimo: '0.00' },
+                        datosProcessados: 0
+                    });
+                    return;
+                }
 
-                for (let i = 0; i < datos.length; i++) {
-                    temperaturas.push(datos[i].temperatura);
-                    humedades.push(datos[i].humedad);
-                    
-                    datosRecibidos = i + 1;
+                let tempMin = Infinity;
+                let tempMax = -Infinity;
+                let tempSum = 0;
+                
+                let humMin = Infinity;
+                let humMax = -Infinity;
+                let humSum = 0;
+
+                for (let i = 0; i < totalDatos; i++) {
+                    const temp = datos[i].temperatura;
+                    const hum = datos[i].humedad;
+
+                    if (temp < tempMin) tempMin = temp;
+                    if (temp > tempMax) tempMax = temp;
+                    tempSum += temp;
+
+                    if (hum < humMin) humMin = hum;
+                    if (hum > humMax) humMax = hum;
+                    humSum += hum;
 
                     // Enviar progreso cada 1000 registros
                     if (i % 1000 === 0) {
@@ -47,18 +78,18 @@ class Nivel4 {
                     }
                 }
 
-                // Calcular estadísticas
+                // Calcular estadísticas finales
                 const estadisticas = {
                     tipo: 'resultados',
                     temperatura: {
-                        promedio: (temperaturas.reduce((a, b) => a + b) / temperaturas.length).toFixed(2),
-                        maximo: Math.max(...temperaturas).toFixed(2),
-                        minimo: Math.min(...temperaturas).toFixed(2)
+                        promedio: (tempSum / totalDatos).toFixed(2),
+                        maximo: tempMax.toFixed(2),
+                        minimo: tempMin.toFixed(2)
                     },
                     humedad: {
-                        promedio: (humedades.reduce((a, b) => a + b) / humedades.length).toFixed(2),
-                        maximo: Math.max(...humedades).toFixed(2),
-                        minimo: Math.min(...humedades).toFixed(2)
+                        promedio: (humSum / totalDatos).toFixed(2),
+                        maximo: humMax.toFixed(2),
+                        minimo: humMin.toFixed(2)
                     },
                     datosProcessados: totalDatos
                 };
@@ -149,8 +180,21 @@ class Nivel4 {
             // Marcar como completado
             this.resultadosObtenidos = true;
 
-            // Habilitar botón
-            document.getElementById('iniciarBtn').disabled 
+            // Habilitar botón de iniciar (para permitir repetir si limpian)
+            document.getElementById('iniciarBtn').disabled = false;
+
+            // Habilitar botón de siguiente nivel
+            const nextBtn = document.getElementById('btn-siguiente-n4');
+            if (nextBtn) {
+                nextBtn.disabled = false;
+            }
+
+            // Guardar progreso en localStorage para permitir acceso al nivel 5
+            let currentReached = parseInt(localStorage.getItem('escapeRoom_levelReached') || '1', 10);
+            if (currentReached < 5) {
+                localStorage.setItem('escapeRoom_levelReached', '5');
+            }
+
             this.mostrarValidacionExito();
         }
     }
@@ -193,6 +237,12 @@ class Nivel4 {
 
         // Habilitar boton
         document.getElementById('iniciarBtn').disabled = false;
+
+        // Deshabilitar boton de siguiente nivel
+        const nextBtn = document.getElementById('btn-siguiente-n4');
+        if (nextBtn) {
+            nextBtn.disabled = true;
+        }
     }
 }
 

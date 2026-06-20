@@ -1,6 +1,14 @@
 
 class Nivel5 {
     constructor() {
+        // Validar acceso antes de inicializar
+        const reached = parseInt(localStorage.getItem('escapeRoom_levelReached') || '1', 10);
+        if (reached < 5) {
+            alert('Acceso denegado. Debes completar los niveles anteriores primero.');
+            window.location.href = 'nivel4.html';
+            return;
+        }
+
         this.worker = null;
         this.resultadosObtenidos = false;
         this.datosOriginales = null;
@@ -15,6 +23,17 @@ class Nivel5 {
         document.getElementById('iniciarBtn').addEventListener('click', () => this.iniciarProcesamiento());
         document.getElementById('limpiarBtn').addEventListener('click', () => this.limpiar());
         document.getElementById('exportarBtn').addEventListener('click', () => this.exportarJSON());
+        
+        const restartBtn = document.getElementById('btn-reiniciar-juego');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que deseas reiniciar todo el Escape Room? Se perderá tu progreso.')) {
+                    localStorage.removeItem('escapeRoom_levelReached');
+                    localStorage.removeItem('fotoExplorador');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
     }
 
     crearWorker() {
@@ -230,6 +249,15 @@ class Nivel5 {
         // Habilitar botones
         document.getElementById('iniciarBtn').disabled = false;
 
+        // Mostrar botón de reiniciar
+        const restartContainer = document.getElementById('reiniciarContenedor');
+        if (restartContainer) {
+            restartContainer.style.display = 'block';
+        }
+
+        // Guardar progreso completo
+        localStorage.setItem('escapeRoom_levelReached', '6');
+
         // Mostrar mensaje de validación
         this.mostrarValidacionExito();
     }
@@ -307,6 +335,12 @@ class Nivel5 {
         // Habilitar/deshabilitar botones
         document.getElementById('iniciarBtn').disabled = false;
         document.getElementById('exportarBtn').disabled = true;
+
+        // Ocultar botón de reiniciar
+        const restartContainer = document.getElementById('reiniciarContenedor');
+        if (restartContainer) {
+            restartContainer.style.display = 'none';
+        }
     }
 }
 
