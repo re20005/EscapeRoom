@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 4 - El Núcleo de Procesamiento</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Título -->
+                <h1 class="text-center mb-2">Nivel 4</h1>
+                <h2 class="text-center text-muted mb-5">El Núcleo de Procesamiento</h2>
+
+                <!-- Card Principal -->
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Procesador de Datos de Sensores</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Botones -->
+                        <div class="mb-4">
+                            <button id="iniciarBtn" class="btn btn-primary btn-lg w-100 mb-2">
+                                Iniciar Procesamiento
+                            </button>
+                            <button id="limpiarBtn" class="btn btn-secondary btn-lg w-100">
+                                Limpiar
+                            </button>
+                        </div>
+
+                        <!-- Barra de Progreso -->
+                        <div id="progressContainer" class="mb-4" style="display: none;">
+                            <p class="text-muted">Procesando datos...</p>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%">
+                                    <span id="progressText">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estado -->
+                        <div id="estadoMsg" class="alert alert-info" style="display: none;">
+                            <span id="estadoTxt"></span>
+                        </div>
+
+                        <!-- Resultados -->
+                        <div id="resultadosContainer" style="display: none;">
+                            <h5 class="mb-3">Resultados del Procesamiento</h5>
+
+                            <!-- Temperatura -->
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>Temperatura (°C)</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Promedio</p>
+                                            <h5 id="tempPromedio">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Máximo</p>
+                                            <h5 id="tempMaximo">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Mínimo</p>
+                                            <h5 id="tempMinimo">-</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Humedad -->
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>Humedad (%)</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Promedio</p>
+                                            <h5 id="humPromedio">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Máximo</p>
+                                            <h5 id="humMaximo">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="text-muted small mb-1">Mínimo</p>
+                                            <h5 id="humMinimo">-</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Éxito -->
+                            <div class="alert alert-success">
+                                <strong>Nivel 4 Completado!</strong> Datos procesados exitosamente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="nivel4.js"></script>
+</body>
+</html>
