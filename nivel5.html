@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 5 - El Portal Cuántico</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h1 class="text-center mb-2">Nivel 5</h1>
+                <h2 class="text-center text-muted mb-5">El Portal Cuántico</h2>
+
+                <div class="card shadow">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Analizador Cuántico de Datos</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <button id="iniciarBtn" class="btn btn-danger btn-lg w-100 mb-2">
+                                Procesar 250,000 Registros
+                            </button>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button id="exportarBtn" class="btn btn-success w-100" disabled>
+                                        Exportar JSON
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button id="limpiarBtn" class="btn btn-secondary w-100">
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="progressContainer" class="mb-4" style="display: none;">
+                            <p class="text-muted mb-2">Procesando datos...</p>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progressBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%">
+                                    <span id="progressText">0%</span>
+                                </div>
+                            </div>
+                            <small id="procesadosTxt" class="text-muted mt-2 d-block"></small>
+                        </div>
+
+                        <div id="estadoMsg" class="alert alert-info" style="display: none;">
+                            <span id="estadoTxt"></span>
+                        </div>
+
+                        <div id="resultadosContainer" style="display: none;">
+                            <h5 class="mb-4">Resultados del Análisis Cuántico</h5>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <small class="text-muted d-block">Registros Válidos</small>
+                                            <h4 id="registrosValidos">0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <small class="text-muted d-block">Registros Filtrados</small>
+                                            <h4 id="registrosFiltrados">0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <small class="text-muted d-block">Tasa de Validez</small>
+                                            <h4 id="tasaValidez">0%</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <strong>Promedios Generales</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <small class="text-muted d-block mb-1">Temperatura</small>
+                                            <h5 id="tempPromedioGeneral">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <small class="text-muted d-block mb-1">Humedad</small>
+                                            <h5 id="humPromedioGeneral">-</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <small class="text-muted d-block mb-1">Presión</small>
+                                            <h5 id="presPromedioGeneral">-</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header bg-primary text-white">
+                                            <strong>Top 10 Temperaturas (°C)</strong>
+                                        </div>
+                                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                            <div id="topTemperaturas">
+                                                <span class="text-muted">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header bg-warning text-dark">
+                                            <strong>Top 10 Presiones (hPa)</strong>
+                                        </div>
+                                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                            <div id="topPresiones">
+                                                <span class="text-muted">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-success mt-3">
+                                <strong>Nivel 5 Completado!</strong> Todos los datos procesados sin congelación.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="nivel5_v1.js"></script>
+</body>
+</html>
